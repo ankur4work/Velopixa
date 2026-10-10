@@ -1,0 +1,210 @@
+/* Velopixa marketing/login splash — indigo-ink panel, violet/plum accents.
+   Shapes follow the app theme: notched cards (square top-left corner), pill
+   tags, and a diagonal-hatch texture rather than a radial glow. */
+
+.index {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  padding: 48px 24px;
+  box-sizing: border-box;
+  background: linear-gradient(140deg, #171033 0%, #241a4d 48%, #4526b8 100%);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif;
+  color: #ece4ff;
+}
+
+/* Diagonal hatch texture — the theme's signature, in place of a glow blob. */
+.index::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.05) 0px,
+    rgba(255, 255, 255, 0.05) 1px,
+    transparent 1px,
+    transparent 10px
+  );
+  mask-image: linear-gradient(105deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0) 70%);
+  -webkit-mask-image: linear-gradient(105deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0) 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.content {
+  display: grid;
+  gap: 20px;
+  width: 100%;
+  max-width: 980px;
+  justify-items: start;
+  text-align: left;
+}
+
+/* Pill tag with a leading dot, matching .vx-hero-tag in the app theme. */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #d9c9ff;
+  background: rgba(139, 108, 255, 0.18);
+  border: 1px solid rgba(192, 132, 252, 0.34);
+  border-radius: 999px;
+  padding: 5px 13px 5px 10px;
+}
+
+.tag::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #c084fc;
+  box-shadow: 0 0 0 3px rgba(192, 132, 252, 0.22);
+}
+
+.heading {
+  margin: 0;
+  font-size: clamp(30px, 5vw, 46px);
+  line-height: 1.1;
+  font-weight: 750;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+}
+
+.text {
+  margin: 0;
+  max-width: 620px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(234, 226, 255, 0.82);
+}
+
+.form {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  margin: 8px 0 0 0;
+  flex-wrap: wrap;
+}
+
+.label {
+  display: grid;
+  gap: 6px;
+  min-width: 18rem;
+  font-size: 13px;
+  font-weight: 600;
+  color: #dcd0ff;
+}
+
+.hint {
+  font-size: 11px;
+  font-weight: 400;
+  color: rgba(220, 208, 255, 0.62);
+}
+
+.input {
+  padding: 10px 12px;
+  border-radius: 3px 9px 9px;
+  border: 1px solid rgba(192, 132, 252, 0.34);
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+  font-size: 14px;
+  outline: none;
+}
+
+.input:focus {
+  border-color: #c084fc;
+  box-shadow: 0 0 0 3px rgba(192, 132, 252, 0.24);
+}
+
+.button {
+  padding: 11px 22px;
+  border: none;
+  border-radius: 3px 9px 9px;
+  background: linear-gradient(135deg, #8b6cff 0%, #c084fc 100%);
+  color: #1b0f3d;
+  font-size: 14px;
+  font-weight: 750;
+  cursor: pointer;
+  box-shadow: 0 8px 20px -8px rgba(192, 132, 252, 0.65);
+}
+
+.button:hover {
+  background: linear-gradient(135deg, #a08cff 0%, #d4a5fd 100%);
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  width: 100%;
+}
+
+/* Notched cards with a left accent rail — the app theme's card language. */
+.list > li {
+  position: relative;
+  display: grid;
+  gap: 7px;
+  padding: 18px 18px 18px 22px;
+  border-radius: 3px 12px 12px;
+  border: 1px solid rgba(192, 132, 252, 0.2);
+  background: rgba(255, 255, 255, 0.045);
+  overflow: hidden;
+}
+
+.list > li::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 3px;
+  background: linear-gradient(180deg, #c084fc 0%, #8b6cff 100%);
+}
+
+.list > li > strong {
+  font-size: 14px;
+  font-weight: 750;
+  color: #d9c9ff;
+}
+
+.list > li > span {
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(234, 226, 255, 0.76);
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 6px;
+  font-size: 13px;
+}
+
+.footer a {
+  color: #d9c9ff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+@media only screen and (max-width: 60rem) {
+  .list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

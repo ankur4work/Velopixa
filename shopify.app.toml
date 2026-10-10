@@ -1,0 +1,36 @@
+name = "Velopixa"
+client_id = "a3dc122b13d316adfc3fc08c0c58e546"
+application_url = "https://velopixa.onkra.online"
+embedded = true
+
+
+[access_scopes]
+scopes = "write_products,write_files"
+
+[access.admin]
+direct_api_mode = "online"
+
+[auth]
+redirect_urls = [
+  "https://velopixa.onkra.online/auth/callback",
+  "https://velopixa.onkra.online/auth/shopify/callback",
+  "https://velopixa.onkra.online/api/auth/callback"
+]
+
+[webhooks]
+api_version = "2026-04"
+
+[[webhooks.subscriptions]]
+topics = [ "app/uninstalled" ]
+compliance_topics = [ "customers/redact", "customers/data_request", "shop/redact" ]
+uri = "https://velopixa.onkra.online/webhooks/app/uninstalled"
+
+[[webhooks.subscriptions]]
+topics = [ "products/create" ]
+uri = "https://velopixa.onkra.online/webhooks/products/create"
+
+[pos]
+embedded = false
+
+[build]
+automatically_update_urls_on_dev = false

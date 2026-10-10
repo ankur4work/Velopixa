@@ -1,0 +1,594 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   Velopixa brand theme — "Violet Signal"
+
+   A deliberately different visual identity from the other image apps in this
+   family (which are all jade / teal / emerald): violet → plum on a deep
+   indigo-ink base, with amber reserved for attention states.
+
+   The element shapes are the other half of the identity, and they are chosen
+   to be the inverse of the sibling apps' conventions:
+     · notched cards      — one square corner, three rounded (not uniform radii)
+     · left accent rails  — on metric cards, where siblings put a top bar
+     · circular icon rings — where siblings use squircle tiles
+     · dark topbars        — where siblings use a light tinted band
+     · slanted meter bars  — where siblings use flat equal pills
+     · diagonal hatch      — where siblings use a dot grid
+   ────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  --vx-violet: #6d4aff;
+  --vx-violet-dark: #5733e0;
+  --vx-violet-deep: #4526b8;
+  --vx-plum: #a855f7;
+  --vx-plum-dark: #7e22ce;
+  --vx-link: #5b35e8;
+
+  --vx-ink: #171033;
+  --vx-ink-2: #241a4d;
+  --vx-ink-3: #3b1e8f;
+
+  --vx-amber: #f59e0b;
+
+  --vx-soft-1: #f2edff;
+  --vx-soft-2: #ede4fe;
+  --vx-tint: #f8f5ff;
+  --vx-line: #e4ddf5;
+  --vx-line-2: #d3c7ef;
+  --vx-muted: #6a6487;
+  --vx-muted-2: #4a4468;
+
+  --vx-grad: linear-gradient(135deg, #6d4aff 0%, #a855f7 100%);
+  --vx-grad-dark: linear-gradient(135deg, #5733e0 0%, #7e22ce 100%);
+  --vx-grad-soft: linear-gradient(135deg, #f2edff 0%, #ede4fe 100%);
+  --vx-grad-ink: linear-gradient(140deg, #171033 0%, #241a4d 48%, #4526b8 100%);
+  --vx-grad-bright: linear-gradient(135deg, #8b6cff 0%, #c084fc 100%);
+
+  --vx-ring: rgba(109, 74, 255, 0.24);
+  --vx-shadow: rgba(23, 16, 51, 0.14);
+
+  /* Notched radius: three rounded corners, one square. The square corner is
+     always top-left, so stacked elements share one consistent "anchor". */
+  --vx-radius: 12px;
+  --vx-radius-lg: 18px;
+  --vx-notch: 3px;
+}
+
+/* ── Polaris primary buttons ────────────────────────────────────────────── */
+.Polaris-Button--variantPrimary {
+  background: var(--vx-grad) !important;
+  border-color: var(--vx-violet-dark) !important;
+  box-shadow: 0 2px 8px rgba(109, 74, 255, 0.3) !important;
+}
+.Polaris-Button--variantPrimary:hover:not(:disabled) {
+  background: var(--vx-grad-dark) !important;
+  border-color: var(--vx-violet-deep) !important;
+}
+.Polaris-Button--variantPrimary:active:not(:disabled) {
+  background: linear-gradient(135deg, #4526b8 0%, #6b1b9e 100%) !important;
+}
+/* A disabled button must LOOK disabled. The rule above sets the gradient with
+   !important on every primary button, which would otherwise override Polaris's
+   own disabled styling — a button that cannot be clicked would look exactly
+   like one that can, and clicking it would appear to do nothing. */
+.Polaris-Button--variantPrimary:disabled,
+.Polaris-Button--variantPrimary[aria-disabled="true"] {
+  background: #ebebeb !important;
+  border-color: #ebebeb !important;
+  color: #8a8a8a !important;
+  box-shadow: none !important;
+  cursor: not-allowed;
+}
+.Polaris-Button--variantPrimary:disabled .Polaris-Text--root,
+.Polaris-Button--variantPrimary[aria-disabled="true"] .Polaris-Text--root {
+  color: inherit !important;
+}
+
+/* ── Links, focus rings, checkboxes ─────────────────────────────────────── */
+.Polaris-Link { color: var(--vx-link) !important; }
+.Polaris-Link:hover { color: var(--vx-violet-deep) !important; }
+
+.Polaris-TextField__Input:focus {
+  border-color: var(--vx-violet) !important;
+  box-shadow: 0 0 0 3px var(--vx-ring) !important;
+}
+
+.Polaris-Checkbox__Input:checked + .Polaris-Checkbox__Backdrop {
+  background: var(--vx-violet) !important;
+  border-color: var(--vx-violet) !important;
+}
+
+/* ── Hero — ink panel with a bottom underline accent ────────────────────── */
+.vx-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--vx-grad-ink);
+  border-radius: var(--vx-notch) var(--vx-radius-lg) var(--vx-radius-lg);
+  padding: 30px 34px 32px;
+  margin-bottom: 20px;
+  color: #ffffff;
+  box-shadow:
+    0 1px 2px rgba(23, 16, 51, 0.12),
+    0 20px 44px -22px rgba(69, 38, 184, 0.55);
+}
+/* The signature is an underline bar along the BOTTOM edge — the siblings all
+   use a vertical rail on the left, so this reads as a different family. */
+.vx-hero::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #8b6cff 0%, #c084fc 55%, #6d4aff 100%);
+}
+/* Diagonal hatch — texture, in place of the siblings' dot grid. */
+.vx-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.055) 0px,
+    rgba(255, 255, 255, 0.055) 1px,
+    transparent 1px,
+    transparent 9px
+  );
+  mask-image: linear-gradient(105deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0) 72%);
+  -webkit-mask-image: linear-gradient(105deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0) 72%);
+  pointer-events: none; /* decorative only — must not block the hero button */
+  z-index: -1;
+}
+.vx-hero-copy { max-width: 620px; }
+.vx-hero-copy h1 {
+  font-size: 30px;
+  line-height: 1.16;
+  font-weight: 750;
+  letter-spacing: -0.028em;
+  margin: 0 0 10px 0;
+  color: #ffffff;
+}
+.vx-hero-copy p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(234, 226, 255, 0.84);
+  margin: 0;
+}
+/* Wordmark tag — a full pill with a leading dot, versus the siblings'
+   squared bracket label with a rotated diamond. */
+.vx-hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #d9c9ff;
+  background: rgba(139, 108, 255, 0.18);
+  border: 1px solid rgba(192, 132, 252, 0.34);
+  border-radius: 999px;
+  padding: 5px 13px 5px 10px;
+  margin: 0;
+}
+.vx-hero-tag::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #c084fc;
+  box-shadow: 0 0 0 3px rgba(192, 132, 252, 0.22);
+}
+/* The hero is ink, so the bright violet gradient reads clearly against it. */
+.vx-hero .Polaris-Button--variantPrimary {
+  background: var(--vx-grad-bright) !important;
+  border-color: #c084fc !important;
+  color: #1b0f3d !important;
+  box-shadow: 0 8px 20px -8px rgba(192, 132, 252, 0.7) !important;
+}
+.vx-hero .Polaris-Button--variantPrimary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #a08cff 0%, #d4a5fd 100%) !important;
+  border-color: #d4a5fd !important;
+  color: #1b0f3d !important;
+}
+.vx-hero .Polaris-Button--variantPrimary:active:not(:disabled) {
+  background: #7e22ce !important;
+  color: #ffffff !important;
+}
+.vx-hero .Polaris-Button--variantPrimary .Polaris-Text--root { color: inherit !important; }
+
+/* Inline stat strip inside the hero — folds the headline numbers into the
+   hero instead of leaving them only in the tile row below. */
+.vx-hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(192, 132, 252, 0.22);
+}
+.vx-hero-stat { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.vx-hero-stat-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(217, 201, 255, 0.72);
+  margin: 0;
+}
+.vx-hero-stat-value {
+  font-size: 19px;
+  font-weight: 750;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: #ffffff;
+  margin: 0;
+}
+@media (max-width: 640px) {
+  .vx-hero { padding: 24px 20px 26px; }
+  .vx-hero-stats { gap: 18px; }
+}
+
+/* ── Metric cards — notched tiles with a LEFT accent rail ──────────────── */
+.vx-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+@media (max-width: 900px) {
+  .vx-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.vx-metric {
+  position: relative;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid var(--vx-line);
+  border-radius: var(--vx-notch) var(--vx-radius) var(--vx-radius);
+  padding: 16px 18px 15px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  box-shadow: 0 1px 2px rgba(23, 16, 51, 0.04);
+  transition: box-shadow 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
+}
+/* Left rail rather than the siblings' top bar. */
+.vx-metric::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 4px;
+  background: var(--vx-grad);
+  opacity: 0.9;
+}
+.vx-metric:hover {
+  transform: translateY(-2px);
+  border-color: var(--vx-line-2);
+  box-shadow: 0 10px 24px -14px rgba(69, 38, 184, 0.42);
+}
+.vx-metric-label {
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--vx-muted);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+/* A fixed figure height keeps numbers and pills on one baseline across tiles. */
+.vx-metric-value,
+.vx-metric-pill {
+  display: flex;
+  align-items: center;
+  min-height: 30px;
+  max-width: 100%;
+}
+.vx-metric-value {
+  font-size: 27px;
+  line-height: 1;
+  font-weight: 750;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  color: var(--vx-ink);
+  margin: 0;
+}
+/* Text-valued metrics read as a status pill, not a broken headline. */
+.vx-metric-pill {
+  box-sizing: border-box;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.2;
+  padding: 0 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.vx-metric-pill--brand     { background: var(--vx-soft-1); color: #4a2aad; border: 1px solid #cdbcf6; }
+.vx-metric-pill--success   { background: #e9f7f0; color: #0c6b45; border: 1px solid #cce9db; }
+.vx-metric-pill--attention { background: #fff6e8; color: #7a4f00; border: 1px solid #f3dfb4; }
+.vx-metric-pill--subdued   { background: #f3f2f8; color: #4f4a63; border: 1px solid #e5e2ee; }
+
+/* ── Slanted usage meter ───────────────────────────────────────────────── */
+.vx-meter {
+  display: flex;
+  gap: 3px;
+  height: 12px;
+  width: 100%;
+  /* The slant is what distinguishes this from the siblings' flat pills.
+     Padding on the right keeps the last (skewed) bar inside the box. */
+  padding-right: 4px;
+}
+.vx-meter-seg {
+  flex: 1;
+  border-radius: 2px;
+  background: #ebe7f5;
+  transform: skewX(-14deg);
+  transition: background 0.25s ease;
+}
+.vx-meter-seg.is-on { background: var(--vx-violet); }
+.vx-meter-seg.is-on:nth-child(n + 15) { background: var(--vx-plum); }
+.vx-meter.is-critical .vx-meter-seg.is-on,
+.vx-meter.is-critical .vx-meter-seg.is-on:nth-child(n + 15) { background: #d7342b; }
+
+/* ── Tool rows — a single-column list, not a 2-up tile grid ───────────── */
+.vx-tools {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.vx-tool {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid var(--vx-line);
+  border-radius: var(--vx-notch) var(--vx-radius) var(--vx-radius);
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s;
+}
+.vx-tool:hover {
+  border-color: var(--vx-line-2);
+  box-shadow: 0 12px 26px -18px rgba(69, 38, 184, 0.45);
+  transform: translateY(-1px);
+}
+/* Locked rows read as unavailable without going fully grey. */
+.vx-tool.is-locked { background: var(--vx-tint); }
+.vx-tool-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+/* Circular icon with a gradient ring — the siblings use squircle tiles. */
+.vx-tool-icon {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--vx-grad-soft);
+  border: 2px solid transparent;
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  background-image: var(--vx-grad-soft), var(--vx-grad);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--vx-violet-deep);
+}
+.vx-tool.is-locked .vx-tool-icon {
+  background-image: linear-gradient(135deg, #f2f1f7 0%, #ebe9f3 100%),
+    linear-gradient(135deg, #cfcadd 0%, #bdb6d2 100%);
+  color: #6f6a85;
+}
+.vx-tool-body { min-width: 0; }
+.vx-tool-title {
+  font-size: 14.5px;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+  color: var(--vx-ink);
+  margin: 0;
+}
+.vx-tool-desc {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--vx-muted);
+  margin: 4px 0 0 0;
+}
+.vx-tool-foot {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+.vx-tool-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.vx-tool-chip--on        { background: var(--vx-soft-1); color: #4a2aad; border: 1px solid #cdbcf6; }
+.vx-tool-chip--off       { background: #f3f2f8; color: #4f4a63; border: 1px solid #e5e2ee; }
+.vx-tool-chip--attention { background: #fff6e8; color: #7a4f00; border: 1px solid #f3dfb4; }
+
+@media (max-width: 740px) {
+  .vx-tool { flex-direction: column; align-items: stretch; }
+  .vx-tool-foot { margin-left: 0; justify-content: space-between; }
+}
+
+/* ── Page topbar — DARK ink bar (siblings use a light tinted band) ─────── */
+.vx-topbar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--vx-grad-ink);
+  border: 1px solid var(--vx-ink-3);
+  border-radius: var(--vx-notch) var(--vx-radius) var(--vx-radius);
+  padding: 14px 18px;
+  margin-bottom: 4px;
+  box-shadow: 0 10px 24px -18px rgba(69, 38, 184, 0.55);
+}
+.vx-topbar-badge {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--vx-grad-bright);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  line-height: 1;
+  color: #1b0f3d;
+  box-shadow: 0 6px 14px -6px rgba(192, 132, 252, 0.7);
+}
+.vx-topbar-text { min-width: 0; }
+.vx-topbar-title {
+  font-size: 15px;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  margin: 0;
+}
+.vx-topbar-sub {
+  font-size: 12px;
+  color: rgba(217, 201, 255, 0.76);
+  margin: 3px 0 0 0;
+}
+.vx-topbar-meta {
+  margin-left: auto;
+  flex: 0 0 auto;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #e4d9ff;
+  background: rgba(139, 108, 255, 0.2);
+  border: 1px solid rgba(192, 132, 252, 0.36);
+  border-radius: 999px;
+  padding: 5px 12px;
+  white-space: nowrap;
+}
+@media (max-width: 640px) {
+  .vx-topbar-meta { display: none; }
+}
+
+/* ── Labelled section panel — the relayout's grouping primitive ───────── */
+.vx-panel {
+  background: #ffffff;
+  border: 1px solid var(--vx-line);
+  border-radius: var(--vx-notch) var(--vx-radius) var(--vx-radius);
+  overflow: hidden;
+}
+.vx-panel-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 18px;
+  background: var(--vx-tint);
+  border-bottom: 1px solid var(--vx-line);
+}
+.vx-panel-eyebrow {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--vx-violet-deep);
+  margin: 0;
+}
+.vx-panel-title {
+  font-size: 14px;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+  color: var(--vx-ink);
+  margin: 2px 0 0 0;
+}
+.vx-panel-actions { margin-left: auto; flex: 0 0 auto; }
+.vx-panel-body { padding: 18px; }
+.vx-panel-body--flush { padding: 0; }
+
+/* Two-column split used on the dashboard / analytics relayout. */
+.vx-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+}
+@media (max-width: 1000px) {
+  .vx-split { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ── Stat row used on the optimizer / analytics pages ─────────────────── */
+.vx-figure {
+  background: #ffffff;
+  border: 1px solid var(--vx-line);
+  border-radius: var(--vx-notch) var(--vx-radius) var(--vx-radius);
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 100%;
+  min-width: 0;
+}
+.vx-figure-label {
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--vx-muted);
+  margin: 0;
+}
+.vx-figure-value {
+  font-size: 25px;
+  line-height: 1.1;
+  font-weight: 750;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  color: var(--vx-ink);
+  margin: 0;
+}
+.vx-figure-value--alert { color: #b3251d; }
+.vx-figure-value--good { color: #4a2aad; }
+.vx-figure-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+@media (max-width: 900px) {
+  .vx-figure-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.vx-figure-grid--three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 900px) {
+  .vx-figure-grid--three { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ── Image run tiles ──────────────────────────────────────────────────── */
+.vx-shot {
+  padding: 3px;
+  border-radius: 9px;
+  border: 2px solid var(--vx-line);
+  background: #ffffff;
+  line-height: 0;
+}
+.vx-shot--working { border-color: var(--vx-violet); box-shadow: 0 0 0 3px var(--vx-ring); }
+.vx-shot--done { border-color: var(--vx-plum-dark); }
+.vx-shot--failed { border-color: #d7342b; }
+.vx-shot--skipped { border-color: #d6d1e4; }
